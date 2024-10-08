@@ -3,19 +3,47 @@ from pypdf import PdfReader
 
 class NosisDataMiner:
     __REGEX_DICT = {
-        "Score": r"Score:([0-9]*)",
-        "Total de endeudamiento sistema financiero":r"Total de endeudamiento sistema financiero: (.*)",
-        "Total de compromisos mensuales sistema financiero":r"Total de compromisos mensuales sistema financiero: (.*)",
-        "Cheques Rechazados BCRA - Cantidad sin fondos": r"\[HC\] Cheques Rechazados BCRA\nCantidad sin fondos, no pagados - Últ\. 6 Meses: (.*)",
-        "Cheques Rechazados BCRA - Monto sin fondos": r"\[HC\] Cheques Rechazados BCRA\nCantidad sin fondos, no pagados - Últ\. 6 Meses: .*\nMonto sin fondos, no pagados - Últ. 6 Meses: (.*)",
-        "Situación vigente de Central de Deudores BCRA": r"Situación vigente de Central de Deudores BCRA: (.*)",
-        "Registra aportes patronales": r"Registra .*aportes patronales.*",
-        "Concursos y quiebras cantidad - Últ. 24 meses":r"Concursos y quiebras cantidad - Últ. 24 meses: (.*)",
-        "Deudores Fiscales - Tiene deudas fiscales": r"Deudores Fiscales\nTiene deudas fiscales:(.*)"
+        "Score": {
+          "Salesforce API Name":"",
+          "regex":"Score: ([0-9]*)"
+        },
+        "Total de endeudamiento sistema financiero":{
+          "Salesforce API Name":"",
+          "regex":"Total de endeudamiento sistema financiero: (.*)"
+        },
+        "Total de compromisos mensuales sistema financiero":{
+          "Salesforce API Name":"",
+          "regex":"Total de compromisos mensuales sistema financiero: (.*)"
+        },
+        "Cheques Rechazados BCRA - Cantidad sin fondos": {
+          "Salesforce API Name":"",
+          "regex":"\[HC\] Cheques Rechazados BCRA\nCantidad sin fondos, no pagados - Últ\. 6 Meses: (.*)"
+        },
+        "Cheques Rechazados BCRA - Monto sin fondos": {
+          "Salesforce API Name":"",
+          "regex":"\[HC\] Cheques Rechazados BCRA\nCantidad sin fondos, no pagados - Últ\. 6 Meses: .*\nMonto sin fondos, no pagados - Últ. 6 Meses: (.*)"
+        },
+        "Situación vigente de Central de Deudores BCRA": {
+          "Salesforce API Name":"",
+          "regex":"Situación vigente de Central de Deudores BCRA: (.*)"
+        },
+        "Registra aportes patronales": {
+          "Salesforce API Name":"",
+          "regex":"Registra(.*)aportes patronales (.*)"
+        },
+        "Concursos y quiebras cantidad - Últ. 24 meses":{
+          "Salesforce API Name":"",
+          "regex":"Concursos y quiebras cantidad - Últ. 24 meses: (.*)"
+        },
+        "Deudores Fiscales - Tiene deudas fiscales": {
+          "Salesforce API Name":"",
+          "regex":"Deudores Fiscales\nTiene deudas fiscales:(.*)"
+        }
     }
 
     def __init__(self, file_path: str):
-        self.__data = {key: None for key in self.__REGEX_DICT}
+        __aux_keys = [value["Salesforce API Name"] for key, value in self.__REGEX_DICT]
+        self.__data = {key: None for key in __aux_keys}
 
         try:
             self.file = PdfReader(file_path)
@@ -26,8 +54,14 @@ class NosisDataMiner:
 
     def __get_data_from_text(self):
         for key, value in self.__REGEX_DICT.items():
-            self.__data[key] = re.search(value, self.text).group(1)
-            print(key, ":", self.__data[key])
+          try:
+            if key == "Registra aportes patronales":
+              self.__data[key] = re.search(value, self.text).group(0)
+            else:
+              self.__data[key] = re.search(value, self.text).group(1)
+          except Exception as e:
+            print(f"\tError al obtener {key}")
+            raise e
 
     def __get_text_from_file(self):
         text = ""
