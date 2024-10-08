@@ -56,9 +56,9 @@ class NosisDataMiner:
         for key, value in self.__REGEX_DICT.items():
           try:
             if key == "Registra aportes patronales":
-              self.__data[key] = re.search(value, self.text).group(0)
+              self.__data[value["Salesforce API Name"]] = re.search(value["regex"], self.text).group(0)
             else:
-              self.__data[key] = re.search(value, self.text).group(1)
+              self.__data[value["Salesforce API Name"]] = re.search(value["regex"], self.text).group(1)
           except Exception as e:
             print(f"\tError al obtener {key}")
             raise e
