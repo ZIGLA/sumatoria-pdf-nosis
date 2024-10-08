@@ -4,45 +4,45 @@ from pypdf import PdfReader
 class NosisDataMiner:
     __REGEX_DICT = {
         "Score": {
-          "Salesforce API Name":"",
+          "Salesforce API Name":"Score__c",
           "regex":"Score: ([0-9]*)"
         },
         "Total de endeudamiento sistema financiero":{
-          "Salesforce API Name":"",
+          "Salesforce API Name":"Total_de_endeudamiento_sistema_financier__c",
           "regex":"Total de endeudamiento sistema financiero: (.*)"
         },
         "Total de compromisos mensuales sistema financiero":{
-          "Salesforce API Name":"",
+          "Salesforce API Name":"Total_compromisos_mensuales_sistema_fina__c",
           "regex":"Total de compromisos mensuales sistema financiero: (.*)"
         },
         "Cheques Rechazados BCRA - Cantidad sin fondos": {
-          "Salesforce API Name":"",
+          "Salesforce API Name":"Cheques_Rechazados_BCRA_Cant_sin_fondos__c",
           "regex":"\[HC\] Cheques Rechazados BCRA\nCantidad sin fondos, no pagados - Últ\. 6 Meses: (.*)"
         },
         "Cheques Rechazados BCRA - Monto sin fondos": {
-          "Salesforce API Name":"",
+          "Salesforce API Name":"Cheques_Rechazados_BCRA_Monto_sin_fondos__c",
           "regex":"\[HC\] Cheques Rechazados BCRA\nCantidad sin fondos, no pagados - Últ\. 6 Meses: .*\nMonto sin fondos, no pagados - Últ. 6 Meses: (.*)"
         },
         "Situación vigente de Central de Deudores BCRA": {
-          "Salesforce API Name":"",
+          "Salesforce API Name":"Situacion_vigente_Central_Deudores_BCRA__c",
           "regex":"Situación vigente de Central de Deudores BCRA: (.*)"
         },
         "Registra aportes patronales": {
-          "Salesforce API Name":"",
+          "Salesforce API Name":"Registra_aportes_patronales__c",
           "regex":"Registra(.*)aportes patronales (.*)"
         },
         "Concursos y quiebras cantidad - Últ. 24 meses":{
-          "Salesforce API Name":"",
+          "Salesforce API Name":"Concursos_y_quiebras_cantidad__c",
           "regex":"Concursos y quiebras cantidad - Últ. 24 meses: (.*)"
         },
         "Deudores Fiscales - Tiene deudas fiscales": {
-          "Salesforce API Name":"",
+          "Salesforce API Name":"Deudores_Fiscales_Tiene_deudas_fiscale__c",
           "regex":"Deudores Fiscales\nTiene deudas fiscales:(.*)"
         }
     }
 
     def __init__(self, file_path: str):
-        __aux_keys = [value["Salesforce API Name"] for key, value in self.__REGEX_DICT]
+        __aux_keys = [value["Salesforce API Name"] for key, value in self.__REGEX_DICT.items()]
         self.__data = {key: None for key in __aux_keys}
 
         try:
