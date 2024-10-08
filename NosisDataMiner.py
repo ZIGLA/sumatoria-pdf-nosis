@@ -9,7 +9,7 @@ class NosisDataMiner:
         "Cheques Rechazados BCRA - Cantidad sin fondos": r"\[HC\] Cheques Rechazados BCRA\nCantidad sin fondos, no pagados - Últ\. 6 Meses: (.*)",
         "Cheques Rechazados BCRA - Monto sin fondos": r"\[HC\] Cheques Rechazados BCRA\nCantidad sin fondos, no pagados - Últ\. 6 Meses: .*\nMonto sin fondos, no pagados - Últ. 6 Meses: (.*)",
         "Situación vigente de Central de Deudores BCRA": r"Situación vigente de Central de Deudores BCRA: (.*)",
-        "Registra aportes patronales": r"Registra aportes patronales (.*)",
+        "Registra aportes patronales": r"Registra .*aportes patronales.*",
         "Concursos y quiebras cantidad - Últ. 24 meses":r"Concursos y quiebras cantidad - Últ. 24 meses: (.*)",
         "Deudores Fiscales - Tiene deudas fiscales": r"Deudores Fiscales\nTiene deudas fiscales:(.*)"
     }
