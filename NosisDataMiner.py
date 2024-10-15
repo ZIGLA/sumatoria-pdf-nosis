@@ -59,7 +59,7 @@ class NosisDataMiner:
               self.__data[value["Salesforce API Name"]] = re.search(value["regex"], self.text).group(0).strip("PERFILDELCONSULTADO")
             else:
               self.__data[value["Salesforce API Name"]] = re.search(value["regex"], self.text).group(1).strip("PERFILDELCONSULTADO")
-          except Exception as e:
+          except:
             print(f"\tError al obtener {key}")
             self.__data[value["Salesforce API Name"]] = None
 
